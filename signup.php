@@ -14,7 +14,7 @@
 
 <main>
   <?php
-   load_template("login");
+   load_template("signup");
    ?>
 
 </main>

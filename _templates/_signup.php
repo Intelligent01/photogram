@@ -10,28 +10,28 @@ if(!empty($_POST['username']) and !empty($_POST['phone']) and !empty($_POST['ema
     $email = $_POST['email'];
     $password = $_POST['password'];
     $error=false;
-    $error= signup($username, $password, $email, $password);
+    $error= user::signup($username, $email, $password, $password);
     $signup=true;
 }
 if ($signup) {
     
     if(!$error){
       ?>
-      <div class="bg-light p-5 rounded">
-        <h1>signup Successful</h1>
-        <p class="lead">This example is a quick exercise to signup.</p>
-        <a class="btn btn-lg btn-primary" href="/docs/5.0/components/navbar/" role="button">login »</a>
-      </div>
-    
-    <?php 
-    }else{
-        ?>
     <div class="bg-light p-5 rounded">
         <h1>signup Failed</h1>
         <p class="lead">error to signup,<?=$error?></p>
         <a class="btn btn-lg btn-primary" href="/docs/5.0/components/navbar/" role="button">signup »</a>
       </div>
     
+    
+    <?php 
+    }else{
+      ?>
+      <div class="bg-light p-5 rounded">
+        <h1>signup Successful</h1>
+        <p class="lead">This example is a quick exercise to signup.</p>
+        <a class="btn btn-lg btn-primary" href="/docs/5.0/components/navbar/" role="button">login »</a>
+      </div>
 
     <?}
 }else{

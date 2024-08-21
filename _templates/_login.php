@@ -12,11 +12,11 @@ if(!empty($_POST['email']) and !empty($_POST['password'])) {
 
 if($login) {
 
-    if (!$error) {?>
+    if ($error) {?>
 <div class="bg-light p-5 rounded">
 	<h1>login failed</h1>
 	<p class="lead">error , <?=$error;?></p>
-	<a class="btn btn-lg btn-primary" href="/docs/5.0/components/navbar/" role="button">HOME PAGE »</a>
+	<a class="btn btn-lg btn-primary" href="login.php" role="button">login Again »</a>
 </div>
 <?php
     } else {
@@ -24,7 +24,7 @@ if($login) {
 <div class="bg-light p-5 rounded">
 	<h1>login Successful</h1>
 	<p class="lead">This example is a quick exercise to login.</p>
-	<a class="btn btn-lg btn-primary" href="/docs/5.0/components/navbar/" role="button">login Again »</a>
+	<a class="btn btn-lg btn-primary" href="/" role="button">HOME PAGE »</a>
 </div>
 
 <?php

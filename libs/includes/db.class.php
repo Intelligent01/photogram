@@ -28,10 +28,5 @@ class Database{
         }
     }
 
-    function close_db(){
-        Database::$conn->close();
-    }
-
-
 }
 ?>

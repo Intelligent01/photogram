@@ -29,4 +29,33 @@ class user
         }
         return $error;
     }
+
+    public static function login($email, $password)
+{
+
+    // Create connection
+    $conn = Database::connect_db();
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $sql = "select * from auth where email = '$email'";
+    $result = $conn->query($sql);
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        if ($row['password'] === $password) {
+            return false;
+        }
+        else {
+            $result = "invalid email or password";
+        }
+        return $result;
+    }
+
+
+}
+
+
+
 }

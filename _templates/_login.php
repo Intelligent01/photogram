@@ -6,7 +6,7 @@ if(!empty($_POST['email']) and !empty($_POST['password'])) {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $error = login($email, $password);
+    $error = user::login($email, $password);
     $login = true;
 }
 

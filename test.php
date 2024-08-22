@@ -2,44 +2,38 @@
 
 
 <?php
-
+include "libs/load.php";
 // print_r($_SERVER);
 // print_r($_GET);
 // print_r($_POST);
 
+Session::start();
+setcookie("name", "poorna", time() + 10, "/");
+print_r($_SESSION);
 
-class mic{
-    private $color;
-    private $mode;
-    private $volume;
 
-    public function __construct($color=null)
-    {
-        $this->color;
-        echo "constructing .........";
-    }
-    function __destruct()
-    {
-        return 0;
-    }
-    public  function on_mode(){
-        $this->mode = "on";
-    }
-    public  function off_mode(){
-        $this->mode = "off";
-    }
-     public  function get_mode(){
-        return $this->mode;
-    } 
+if (Session::isset('a')) {
+    echo "session is already created value : ".Session::get('a');
+} else {
 
+    Session::set('a', time());
+    echo "session is  created value : ".Session::get('a');
 }
 
-$mic1 = new mic();
-$mic1->on_mode();
+if (isset($_COOKIE['a'])) {
+    echo "session is already created value : $_COOKIE[a]";
+} else {
 
-echo $mic1->get_mode();
-$mic1->off_mode();
+    $_COOKIE["a"] = time();
+    echo "session is  created value : $_COOKIE[a]";
+}
 
-echo $mic1->get_mode();
+
+print_r(password_algos());
+$password_hash = password_hash("hello", PASSWORD_DEFAULT, ["cost" => 11]);
+
+echo $password_hash.'<br>';
+print_r(password_get_info($password_hash));
+
 ?>
 </pre>

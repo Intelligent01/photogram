@@ -6,21 +6,22 @@ if(!empty($_POST['email']) and !empty($_POST['password'])) {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $error = user::login($email, $password);
+    $result = User::login($email, $password);
     $login = true;
 }
 
 if($login) {
 
-    if ($error) {?>
+    if (!$result) {?>
 <div class="bg-light p-5 rounded">
 	<h1>login failed</h1>
-	<p class="lead">error , <?=$error;?></p>
+	<p class="lead">error , incorrect username or password </p>
 	<a class="btn btn-lg btn-primary" href="login.php" role="button">login Again »</a>
 </div>
 <?php
     } else {
         ?>
+		
 <div class="bg-light p-5 rounded">
 	<h1>login Successful</h1>
 	<p class="lead">This example is a quick exercise to login.</p>

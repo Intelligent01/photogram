@@ -3,7 +3,9 @@
 
 include_once "includes/db.class.php";
 include_once "includes/user.class.php";
+include_once "includes/sessions.class.php";
 
+Session::start();
 
 function load_template($name)
 {

@@ -4,6 +4,7 @@
 include_once "includes/db.class.php";
 include_once "includes/user.class.php";
 include_once "includes/sessions.class.php";
+include_once "includes/UserSession.class.php";
 
 Session::start();
 

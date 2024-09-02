@@ -23,18 +23,17 @@ class User
 
     public function __construct($username)
     {
-        if(!$this->conn) {
+        if (!$this->conn) {
             $this->conn = Database::connect_db();
         }
 
-        $this->id = null;
+
         $this->username = $username;
-        $sql = "select id from auth where username = '$username' or email = '$username' or id= '$username'";
+        $sql = "select id from auth where username = '$username' or email = '$username' or id= '$username' ";
         $result = $this->conn->query($sql);
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
-            $this-> id = $row['id'];
-
+            $this->id = $row['id'];
         } else {
             throw new Exception("invalid user name ,please use a correct user name");
         }
@@ -45,7 +44,7 @@ class User
 
         $conn = Database::connect_db();
         $password = password_hash($password, PASSWORD_ARGON2I, ['cost' => 10]);
-        if($conn === null) {
+        if ($conn === null) {
             echo "connection failed";
         }
 
@@ -57,13 +56,13 @@ class User
             if ($conn->query($sql) === true) {
                 $error = false;
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $error = $conn->error;
         }
         return $error;
     }
 
-    public static function login($email, $password)
+    public static function login($username, $password)
     {
 
         $conn = Database::connect_db();
@@ -72,7 +71,7 @@ class User
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT * FROM `auth` WHERE `username` = '$email' OR `email` = '$email'";
+        $sql = "SELECT * FROM `auth` WHERE `username` = '$username' OR `email` = '$username'";
         $result = $conn->query($sql);
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
@@ -80,7 +79,7 @@ class User
                 Session::set('username', $row['username']);
                 return $row['username'];
             } else {
-                $result = "invalid email or password";
+                echo "invalid email or password";
                 return false;
 
             }
@@ -115,6 +114,7 @@ class User
         $result = $this->conn->query($sql);
         return $result;
     }
+    
 
     public function getUsername()
     {

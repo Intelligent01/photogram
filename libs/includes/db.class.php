@@ -16,7 +16,7 @@ class Database{
             $conn = new mysqli($servername, $db_username, $db_password, $database);
             // Check connection
             if ($conn->connect_error) {
-                print("Connection failed: " . $conn->connect_error);
+                throw new Exception("Connection failed: " . $conn->connect_error);
             }else {
 
                 return Database::$conn = $conn;

@@ -4,43 +4,53 @@ include_once "libs/load.php";
 echo "<h1> login page </h1> <br>";
 
 
-$username = "loko";
-$password = isset($_GET['pass']) ? $_GET['pass'] : '';
 $result = null;
 
-if (isset($_GET['logout'])) {
-    Session::destroy();
-    die("Session destroyd ,<a href=login.php>Login Here</a>");
-}
+print_r($_SESSION);
 
-if (Session::get("is_loggin")) {
-    $username = Session::get('session_user');
-    $userobj = new User($username);
-    echo "weclome , ".$userobj->getUsername();
-    // $userobj->setBio("what is your name");
-    echo "<br>". $userobj->getBio() ;
-    $userobj->setBio("welcome");
-    echo "<br>". $userobj->getBio() ;
-    echo "<br>". $userobj->getDob() ;
-    $userobj->setDob("2024-07-23");
-    echo "<br>". $userobj->getDob() ;
-    
+
+
+
+if (isset($_GET['logout'])) {
+    if (Session::get('session_token')) {
+        $session = new UserSession(Session::get('session_token'));
+        if ($session->remove_session()) {
+            Session::unset();
+            Session::destroy();
+            echo "your session is removed in db ";
+        } else {
+            echo "your session is not removed ";
+        }
+    } else {
+        throw new Exception("invalid session already logouted");
+    }
+} elseif (Session::isset('session_token')) {
+    $session = new UserSession(Session::get('session_token'));
+
+    if (UserSession::authorization(Session::get('session_token'))) {
+        echo $session->extend_login();
+        echo "welcome ";
+    } else {
+
+        print_r($_SESSION);
+        $session->remove_session();
+        Session::destroy();
+        echo "invalid session you  are loggout";
+    }
 
 } else {
-    echo "no session found , try to login <br>";
-    $result = User::login($username, $password);
-    echo $result;
 
-    print_r($_SESSION);
-    echo Session::get("username");
+    $username = "loko";
+    $password = isset($_GET['pass']) ? $_GET['pass'] : '';
+    if (!empty($username) && !empty($password)) {
 
-    if ($result) {
-        echo "yout ar e loggined <br>";
-        $userobj = new User($username);
-        echo "login as , ".$userobj->getUsername();
-        Session::set("is_loggin", true);
-        Session::set('session_user', $result);
-        print_r($_SESSION);
-        echo $userobj->id;
+        UserSession::authenticate($username, $password);
+        if (Session::isset('session_token')) {
+            echo "login Successful";
+        } else {
+            echo "login failed";
+        }
+    } else {
+        echo "you need to login <a href=?pass=loki>login Here </a>";
     }
 }

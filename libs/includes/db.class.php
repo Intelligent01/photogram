@@ -8,10 +8,13 @@ class Database{
 
         if (Database::$conn == null) {
             
-            $servername = "mysql.selfmade.ninja";
-            $db_username = "captain";
-            $db_password = "Captain@123";
-            $database = "captain_ecom";
+            $json_config = file_get_contents($_SERVER['DOCUMENT_ROOT']."/../photogram.conf.json");
+            $config = json_decode($json_config,true);
+
+            $servername =  $config['db_host'];
+            $db_username = $config['db_username'];
+            $db_password = $config['db_password'];
+            $database = $config['db_database'];
             // Create connection
             $conn = new mysqli($servername, $db_username, $db_password, $database);
             // Check connection

@@ -10,7 +10,7 @@ Session::start();
 
 function load_template($name)
 {
-    include_once $_SERVER['DOCUMENT_ROOT']."/_templates/_".$name.".php";
+    include_once $_SERVER['DOCUMENT_ROOT'].get_config('base_path')."/_templates/_".$name.".php";
 }
 
 function credentials($email, $password)
@@ -20,6 +20,12 @@ function credentials($email, $password)
     } else {
         return false;
     }
+}
+
+function get_config($data){
+    $json_config = file_get_contents($_SERVER['DOCUMENT_ROOT']."/../photogram.conf.json");
+    $config = json_decode($json_config,true);
+    return $config[$data];
 }
 
 function get_css()
